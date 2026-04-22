@@ -1,0 +1,42 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fxgatewaydb
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  data:
+    redis:
+      host: localhost
+      port: 6385
+  kafka:
+    bootstrap-servers: localhost:19092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: fx-stream-gateway-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+gateway:
+  rates:
+    poll-interval-ms: 60000
+    base-currency: EUR
+    tracked-currencies: [EUR, USD, GBP, CHF, BGN]
+  duplicate:
+    ttl-hours: 24
+  kafka:
+    request-topic: fx.gateway.request.topic
+    rate-topic: fx.gateway.rate.topic
+
+fixer:
+  url: https://data.fixer.io/api
+  api-key: 14e21786d72d7c721cfff85c282bc143
+  timeout-ms: 5000
