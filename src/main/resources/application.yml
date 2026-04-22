@@ -38,5 +38,5 @@ gateway:
 
 fixer:
   url: https://data.fixer.io/api
-  api-key: ?????
+  api-key: ??????
   timeout-ms: 5000
